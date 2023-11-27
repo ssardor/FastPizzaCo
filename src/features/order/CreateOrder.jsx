@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
+import { useSelector } from "react-redux";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -34,6 +35,7 @@ const fakeCart = [
 function CreateOrder() {
   // const [withPriority, setWithPriority] = useState(false);
   const cart = fakeCart;
+  const user = useSelector((state) => state.user.username);
 
   return (
     <div className="px-4 py-6">
@@ -45,7 +47,13 @@ function CreateOrder() {
         <div className="flex items-center flex-col gap-3 mt-3">
           <label>First Name</label>
           <div>
-            <input className="input" type="text" name="customer" required />
+            <input
+              className="input"
+              type="text"
+              name="customer"
+              required
+              defaultValue={user}
+            />
           </div>
         </div>
 

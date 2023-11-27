@@ -1,14 +1,30 @@
 import { useState } from "react";
 import React from "react";
 import Button from "../../ui/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUsername } from "./userSlice";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function CreateUser() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.username);
   const [username, setUsername] = useState("");
-
+  const navigate = useNavigate();
   function handleSubmit(e) {
     e.preventDefault();
+    if (username) {
+      dispatch(updateUsername(username));
+      navigate("/menu");
+      setUsername("");
+    }
   }
-
+  if (user) {
+    return (
+      <Button type={"primary"} to={"/order/new"}>
+        Continue ordering,{user}!
+      </Button>
+    );
+  }
   return (
     <form onSubmit={handleSubmit}>
       <p className="text-stone-600 mb-4 text-sm md:text-base">
@@ -25,9 +41,7 @@ function CreateUser() {
 
       {username !== "" && (
         <div>
-          <Button type={"primary"} to={"/menu"}>
-            start ordering
-          </Button>
+          <Button type={"primary"}>start ordering</Button>
         </div>
       )}
     </form>
