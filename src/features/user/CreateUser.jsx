@@ -25,7 +25,9 @@ function CreateUser() {
 
       {username !== "" && (
         <div>
-          <Button type={"primary"}>start ordering</Button>
+          <Button type={"primary"} to={"/menu"}>
+            start ordering
+          </Button>
         </div>
       )}
     </form>
