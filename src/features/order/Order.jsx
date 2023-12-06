@@ -1,5 +1,8 @@
 // Test ID: IIDSAT
 
+import { useLoaderData } from "react-router-dom";
+import { getOrder } from "../../services/apiRestaurant";
+import OrderItem from "./OrderItem";
 import {
   calcMinutesLeft,
   formatCurrency,
@@ -42,6 +45,8 @@ const order = {
 };
 
 function Order() {
+  const order = useLoaderData();
+
   // Everyone can search for all orders, so for privacy reasons we're gonna gonna exclude names or address, these are only for the restaurant staff
   const {
     id,
@@ -56,31 +61,52 @@ function Order() {
 
   return (
     <div>
-      <div>
-        <h2>Status</h2>
-
-        <div>
-          {priority && <span>Priority</span>}
-          <span>{status} order</span>
+      <div className="flex items-center justify-between py-4">
+        <h2 className="font-bold">Order #{order.id} Status: </h2>
+        <div className="flex items-center justify-between gap-4">
+          {priority && (
+            <span className="bg-green-500 py-1 px-3 rounded-full uppercase text-white text-sm tracking-widest">
+              Priority
+            </span>
+          )}
+          <span className="bg-red-500 py-1 px-3 rounded-full uppercase text-white text-sm tracking-widest">
+            {status} order
+          </span>
         </div>
       </div>
 
-      <div>
+      <div className="bg-stone-300 p-5 flex justify-between items-center gap-4">
         <p>
           {deliveryIn >= 0
             ? `Only ${calcMinutesLeft(estimatedDelivery)} minutes left 😃`
             : "Order should have arrived"}
         </p>
-        <p>(Estimated delivery: {formatDate(estimatedDelivery)})</p>
+        <p className="text-sm text-stone-400 italic">
+          (Estimated delivery: {formatDate(estimatedDelivery)})
+        </p>
       </div>
+      <ul className="divide-y-2 my-8">
+        {order.cart.map((item) => (
+          <OrderItem item={item} />
+        ))}
+      </ul>
 
-      <div>
-        <p>Price pizza: {formatCurrency(orderPrice)}</p>
+      <div className="p-5 bg-stone-300 justify-between">
+        <p className="leading-8">Price pizza: {formatCurrency(orderPrice)}</p>
         {priority && <p>Price priority: {formatCurrency(priorityPrice)}</p>}
-        <p>To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}</p>
+        <p className="leading-8">
+          To pay on delivery: {formatCurrency(orderPrice + priorityPrice)}
+        </p>
       </div>
     </div>
   );
+}
+
+export async function loader({ params }) {
+  // console.log(params.orderID);
+  const data = await getOrder(params.orderID);
+  console.log(data);
+  return data;
 }
 
 export default Order;

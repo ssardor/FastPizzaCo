@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Button from "../../ui/Button";
 import { useSelector } from "react-redux";
+import { Form, redirect, useActionData } from "react-router-dom";
+import { createOrder } from "../../services/apiRestaurant";
 
 // https://uibakery.io/regex-library/phone-number
 const isValidPhone = (str) =>
@@ -33,9 +35,11 @@ const fakeCart = [
 ];
 
 function CreateOrder() {
+  const data = useActionData();
   // const [withPriority, setWithPriority] = useState(false);
-  const cart = fakeCart;
   const user = useSelector((state) => state.user.username);
+  const cart = fakeCart;
+  console.log(data);
 
   return (
     <div className="px-4 py-6">
@@ -43,35 +47,36 @@ function CreateOrder() {
         Ready to order? Let's go!
       </h2>
 
-      <form>
-        <div className="flex items-center flex-col gap-3 mt-3">
-          <label>First Name</label>
-          <div>
-            <input
-              className="input"
-              type="text"
-              name="customer"
-              required
-              defaultValue={user}
-            />
-          </div>
+      <Form method="POST">
+        <div className="flex items-center  gap-3 mt-3">
+          <label className="w-[115px]">First Name</label>
+          <input
+            className="input w-3/4"
+            type="text"
+            name="customer"
+            required
+            defaultValue={user}
+          />
         </div>
 
-        <div className="flex items-center flex-col gap-3 mt-3">
-          <label>Phone number</label>
-          <div>
-            <input className="input" type="tel" name="phone" required />
-          </div>
+        <div className="flex items-center  gap-3 mt-3">
+          <label className="items-center">Phone number</label>
+          <input className="input w-3/4" type="tel" name="phone" required />
+        </div>
+        <p className="text-center pt-2">
+          {data?.phone && (
+            <p className="text-red-500">
+              Please write correct phone number and we will call you!
+            </p>
+          )}
+        </p>
+
+        <div className="flex items-center gap-3 mt-3">
+          <label className="w-[115px]">Address</label>
+          <input className="input w-3/4" type="text" name="address" required />
         </div>
 
-        <div className="flex items-center flex-col gap-3 mt-3">
-          <label>Address</label>
-          <div>
-            <input className="input" type="text" name="address" required />
-          </div>
-        </div>
-
-        <div className="text-center pt-4 gap-4 ">
+        <div className="text-center pt-4 gap-4 flex">
           <input
             type="checkbox"
             name="priority"
@@ -82,12 +87,33 @@ function CreateOrder() {
           <label htmlFor="priority">Want to yo give your order priority?</label>
         </div>
 
-        <div className="text-center">
+        <div className="mt-5">
+          <input name="cart" type="hidden" value={JSON.stringify(cart)} />
           <Button type={"primary"}>Order now</Button>
         </div>
-      </form>
+      </Form>
     </div>
   );
+}
+
+export async function action({ request }) {
+  const formData = await request.formData();
+  const data = Object.fromEntries(formData);
+  console.log(data);
+  const errors = {};
+
+  if (!isValidPhone(data.phone))
+    errors.phone = "Please write correct phone number";
+
+  if (Object.keys(errors).length > 0) return errors;
+
+  const newOrder = {
+    ...data,
+    priority: data.priority === "on",
+    cart: JSON.parse(data.cart),
+  };
+  const order = await createOrder(newOrder);
+  return redirect(`/order/${order.id}`);
 }
 
 export default CreateOrder;

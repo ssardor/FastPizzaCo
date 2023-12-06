@@ -3,8 +3,10 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import Home from "./ui/Home";
 import Cart from "./features/cart/Cart";
 import Menu, { loader as menuLoader } from "./features/menu/Menu";
-import CreateOrder from "./features/order/CreateOrder";
-import Order from "./features/order/Order";
+import CreateOrder, {
+  action as createOrderAction,
+} from "./features/order/CreateOrder";
+import Order, { loader as orderLoader } from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import NotFound from "./ui/Error";
 
@@ -22,6 +24,7 @@ const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
         loader: menuLoader,
+        errorElement: <NotFound />,
       },
       {
         path: "/cart",
@@ -30,10 +33,13 @@ const router = createBrowserRouter([
       {
         path: "/order/new",
         element: <CreateOrder />,
+        action: createOrderAction,
       },
       {
         path: "/order/:orderID",
         element: <Order />,
+        loader: orderLoader,
+        errorElement: <NotFound />,
       },
     ],
   },
@@ -41,12 +47,12 @@ const router = createBrowserRouter([
 
 function App() {
   return <RouterProvider router={router} />;
+
   // return (
   // <div className="mx-auto bg-black">
   //   <h1 className="text-yellow-400 font-Robo font-bold text-center text-[40px]">
   //     Hello World !
   //   </h1>
-
   //   <div className="grid grid-cols-1 md:grid-cols-6 xl:grid-cols-12 gap-4 mt-12">
   //     <div className="h-14 bg-gray-500"></div>
   //     <div className="h-14 bg-gray-500"></div>
