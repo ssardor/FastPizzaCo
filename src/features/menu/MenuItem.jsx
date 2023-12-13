@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
-import { addToCart, getCurrentQuantity } from "../cart/cartSlice";
+import { addToCart, deleteCart, getCurrentQuantity } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
 
 function MenuItem({ pizza }) {
@@ -22,7 +22,10 @@ function MenuItem({ pizza }) {
     };
     dispatch(addToCart(newPizza));
   };
-
+  const handleDelete = (e) => {
+    e.preventDefault();
+    dispatch(deleteCart(id));
+  };
   return (
     <li className="flex px-2 py-4 gap-3 font-Robo gap-5">
       <img
@@ -39,7 +42,7 @@ function MenuItem({ pizza }) {
           ) : (
             <p className="text-red-500 uppercase">Sold out!</p>
           )}
-          {!soldOut && isAdded > 0 && <DeleteItem />}
+          {!soldOut && isAdded > 0 && <DeleteItem onClick={handleDelete} />}
           {!soldOut && !isAdded && (
             <Button type="small" onClick={handleAddToCart}>
               Add to cart

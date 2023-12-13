@@ -13,6 +13,7 @@ const cartSlice = createSlice({
     },
     deleteCart(state, action) {
       state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
+      console.log(state);
     },
     increaseCart(state, action) {
       const pizza = state.cart.find((item) => item.pizzaId == action.payload);
@@ -41,6 +42,7 @@ export const getCurrentQuantity = (id) => {
   return (state) => state.cart.cart.find((item) => item.pizzaId === id);
 };
 
-export const { addToCart, deleteCart } = cartSlice.actions;
+export const { addToCart, deleteCart, clearCart, increaseCart, decreaseCart } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

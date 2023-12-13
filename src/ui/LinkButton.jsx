@@ -14,7 +14,11 @@ const LinkButton = ({ children, to }) => {
     );
   }
 
-  return <Link className={className}>{children}</Link>;
+  return (
+    <Link to="/menu" className={className}>
+      {children}
+    </Link>
+  );
 };
 
 export default LinkButton;
