@@ -5,7 +5,7 @@ function NotFound() {
   const err = useRouteError();
   console.log(err);
   return (
-    <div>
+    <div className="p-5">
       <h1>Something went wrong 😢</h1>
       <p>{err.data || err.message}</p>
       <LinkButton to={"-1"}>🔙Go back!</LinkButton>

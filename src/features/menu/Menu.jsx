@@ -3,7 +3,6 @@ import { getMenu } from "../../services/apiRestaurant";
 import Menuitem from "./MenuItem";
 function Menu() {
   const menu = useLoaderData();
-  console.log(menu);
   return (
     <>
       <div className="mx-auto max-w-3xl">

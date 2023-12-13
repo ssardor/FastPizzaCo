@@ -3,11 +3,12 @@ import Button from "../../ui/Button";
 import { formatCurrency } from "../../utils/helpers";
 import { addToCart, deleteCart, getCurrentQuantity } from "../cart/cartSlice";
 import DeleteItem from "../cart/DeleteItem";
+import UpdateCartQty from "../cart/UpdateCartQty";
 
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
-  const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
-  console.log(pizza);
+  const { id, name, unitPrice, ingredients, soldOut, imageUrl, quantity } =
+    pizza;
   const itemQuantity = useSelector(getCurrentQuantity(id));
   const isAdded = itemQuantity?.quantity > 0;
 
@@ -21,10 +22,6 @@ function MenuItem({ pizza }) {
       totalPrice: 1 * unitPrice,
     };
     dispatch(addToCart(newPizza));
-  };
-  const handleDelete = (e) => {
-    e.preventDefault();
-    dispatch(deleteCart(id));
   };
   return (
     <li className="flex px-2 py-4 gap-3 font-Robo gap-5">
@@ -42,7 +39,13 @@ function MenuItem({ pizza }) {
           ) : (
             <p className="text-red-500 uppercase">Sold out!</p>
           )}
-          {!soldOut && isAdded > 0 && <DeleteItem onClick={handleDelete} />}
+          {!soldOut && isAdded > 0 && (
+            <div className="flex items-center justify-between gap-6">
+              <UpdateCartQty id={id} itemQuantity={itemQuantity} />
+              <DeleteItem id={id} />
+            </div>
+          )}
+
           {!soldOut && !isAdded && (
             <Button type="small" onClick={handleAddToCart}>
               Add to cart
