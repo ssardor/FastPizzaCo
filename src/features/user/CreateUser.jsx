@@ -40,7 +40,7 @@ function CreateUser() {
       />
 
       {username !== "" && (
-        <div>
+        <div className="py-6">
           <Button type={"primary"}>start ordering</Button>
         </div>
       )}
