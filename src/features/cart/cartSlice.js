@@ -13,7 +13,6 @@ const cartSlice = createSlice({
     },
     deleteCart(state, action) {
       state.cart = state.cart.filter((item) => item.pizzaId !== action.payload);
-      console.log(state);
     },
     increaseCart(state, action) {
       const pizza = state.cart.find((item) => item.pizzaId == action.payload);

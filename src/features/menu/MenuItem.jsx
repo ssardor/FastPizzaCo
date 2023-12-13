@@ -7,9 +7,9 @@ import DeleteItem from "../cart/DeleteItem";
 function MenuItem({ pizza }) {
   const dispatch = useDispatch();
   const { id, name, unitPrice, ingredients, soldOut, imageUrl } = pizza;
+  console.log(pizza);
   const itemQuantity = useSelector(getCurrentQuantity(id));
   const isAdded = itemQuantity?.quantity > 0;
-  console.log(itemQuantity);
 
   const handleAddToCart = (e) => {
     e.preventDefault();
