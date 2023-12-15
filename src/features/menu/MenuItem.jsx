@@ -35,12 +35,12 @@ function MenuItem({ pizza }) {
         <p className="italic">{ingredients.join(", ")}</p>
         <div className="flex justify-between items-center mt-auto">
           {!soldOut ? (
-            <p>{formatCurrency(unitPrice)}</p>
+            <p className="me-2">{formatCurrency(unitPrice)}</p>
           ) : (
             <p className="text-red-500 uppercase">Sold out!</p>
           )}
           {!soldOut && isAdded > 0 && (
-            <div className="flex items-center justify-between gap-6">
+            <div className="flex items-center justify-between gap-3 ">
               <UpdateCartQty id={id} itemQuantity={itemQuantity} />
               <DeleteItem id={id} />
             </div>

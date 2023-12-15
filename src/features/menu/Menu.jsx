@@ -5,7 +5,7 @@ function Menu() {
   const menu = useLoaderData();
   return (
     <>
-      <div className="mx-auto max-w-3xl">
+      <div className="mx-auto max-w-3xl overflow-y-hidden">
         <ul className="divide-y px-2 divide-stone-500">
           {menu.map((pizza) => (
             <Menuitem pizza={pizza} key={pizza.id} />

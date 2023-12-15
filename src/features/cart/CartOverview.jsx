@@ -7,12 +7,12 @@ function CartOverview() {
   const totalPrice = useSelector(getTotalPriceQuantity);
   if (totalCartQuantity <= 0) return null;
   return (
-    <div className="bg-stone-900 text-white flex items-center justify-between px-10 py-4 uppercase font-Robo">
-      <p className="space-x-4">
-        <span>pizzas : {totalCartQuantity} </span>
-        <span>Total Price : {formatCurrency(totalPrice)}</span>
-      </p>
-      <Link to="/cart">Open cart &rarr;</Link>
+    <div className="bg-stone-900 text-white flex items-center justify-between px-5 py-4 uppercase font-Robo">
+      <div className="">
+        <p>pizz : {totalCartQuantity} </p>
+        <p>Total Price : {formatCurrency(totalPrice)}</p>
+      </div>
+      <Link to="/cart"><p> Open cart &rarr;</p></Link>
     </div>
   );
 }

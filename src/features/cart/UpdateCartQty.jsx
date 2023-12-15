@@ -8,7 +8,7 @@ const UpdateCartQty = ({ id, itemQuantity }) => {
   console.log(itemQuantity);
 
   return (
-    <div className="flex gap-5 items-center">
+    <div className="flex gap-2 items-center">
       <Button type="rounded" onClick={() => dispatch(decreaseCart(id))}>
         -
       </Button>

@@ -19,7 +19,7 @@ function Cart() {
   }
 
   return (
-    <div>
+    <div className="px-3">
       <LinkButton to="/menu">&larr; Back to menu</LinkButton>
       <h2>Your cart, {user}</h2>
       <div className="divide-y-2 border-y-2 my-4">

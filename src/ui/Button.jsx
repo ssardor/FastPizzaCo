@@ -11,13 +11,13 @@ const Button = ({ children, type, to, onClick }) => {
       " outline-yellow-600 inline-block bg-yellow-500 hover:bg-yellow-200 tracking-tight hover:border-yellow-400  py-3 px-4",
     small:
       className +
-      " outline-yellow-600 inline-block bg-yellow-500 hover:bg-yellow-200 tracking-tight hover:border-yellow-400 px-4 py-1 text-sm",
+      " outline-yellow-600 inline-block bg-yellow-500 hover:bg-yellow-200 tracking-tight hover:border-yellow-400 px-3 py-1 text-sm",
     secondary:
       className +
       " outline-stone-600 bg-stone-200 hover:bg-stone-400 py-3 px-4 ",
     rounded:
       className +
-      " outline-yellow-600 inline-block bg-yellow-500 hover:bg-yellow-200 tracking-tight hover:border-yellow-400 px-3 rounded-full py-1",
+      " outline-yellow-600 inline-block bg-yellow-500 hover:bg-yellow-200 tracking-tight hover:border-yellow-400 px-2 rounded-full py-0",
   };
   if (to) {
     return (
